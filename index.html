@@ -39,28 +39,28 @@
             document.getElementById("flightDetails").innerHTML = flightDetails;
         }
 
-        // Function to call the OpenAI ChatGPT API and get the response
-        async function getChatbotResponse(userInput) {
-            var response = await fetch("https://api.openai.com/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer org-w8MYDuacOyjAmRG2Z73tQfBm" // Replace with your actual OpenAI API key
-                },
-                body: JSON.stringify({
-                    "model": "gpt-3.5-turbo",
-                    "messages": [
-                        { "role": "system", "content": "You are a helpful assistant." },
-                        { "role": "user", "content": userInput }
-                    ]
-                })
-            });
+       // Function to call the OpenAI ChatGPT API and get the response
+async function getChatbotResponse(userInput) {
+    var response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer org-w8MYDuacOyjAmRG2Z73tQfBm" // Replace with your actual OpenAI API key
+        },
+        body: JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                { "role": "system", "content": "You are a helpful assistant." },
+                { "role": "user", "content": userInput }
+            ]
+        })
+    });
 
-            var data = await response.json();
-            var chatbotResponse = data.choices[0].message.content;
+    var data = await response.json();
+    var chatbotResponse = data.choices[0].message.content;
 
-            return chatbotResponse;
-        }
+    return chatbotResponse;
+}
 
         // Function to generate the flight details HTML based on the chatbot response
         function generateFlightDetails(response) {
