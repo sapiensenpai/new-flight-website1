@@ -23,36 +23,53 @@
 <body>
     <div class="container">
         <h1>New Flight Details</h1>
-        <p>Thank you for providing the details for your new flight. Here are the details for your <span id="airline"></span> flight from <span id="departure"></span> to <span id="destination"></span> using an <span id="aircraft"></span>:</p>
-        <p id="flightPlan"></p>
-        <p>Introductory Text: "<span id="introductoryText"></span>"</p>
-        <p>Cruising Altitude: For this flight, a suitable cruising altitude would be <span id="cruisingAltitude"></span>.</p>
-        <p>Cruising Speed: The cruising speed for an <span id="aircraft"></span> is typically <span id="cruisingSpeed"></span>.</p>
-        <p>Please copy and paste the provided flight plan into your flight simulation software. Adjust the cruising altitude and speed as necessary based on your specific simulator requirements.</p>
-        <p>If you have any further requests or need assistance with anything else, feel free to let me know.</p>
+        <p id="flightDetails"></p>
     </div>
 
     <script>
         // Function to populate the flight details
-        function populateFlightDetails() {
-            var airline = "Delta Airlines";
-            var departure = "KSFO (San Francisco International Airport)";
-            var destination = "KMIA (Miami International Airport)";
-            var aircraft = "Airbus A330-900neo";
-            var flightPlan = "KSFO DCT CANON DCT LOZIT DCT ZONIE DCT WIGOL DCT KIKIX DCT CUJIM DCT MALIT DCT 2730N 07911W DCT JAAWS DCT ZQA R507 WIGEE R507 BURTT R507 KMIA";
-            var introductoryText = "Welcome aboard our Delta Airlines A330-900neo. We are flying from San Francisco International Airport to Miami International Airport. Enjoy a pleasant flight as we take you to your destination. Over and out.";
-            var cruisingAltitude = "FL350 (35,000 feet)";
-            var cruisingSpeed = "Mach 0.82 (approximately 470 knots or 541 mph)";
+        async function populateFlightDetails() {
+            var userInput = "New Flight"; // Replace with your actual user input
 
-            // Update the HTML elements with the flight details
-            document.getElementById("airline").textContent = airline;
-            document.getElementById("departure").textContent = departure;
-            document.getElementById("destination").textContent = destination;
-            document.getElementById("aircraft").textContent = aircraft;
-            document.getElementById("flightPlan").textContent = "Flight Plan: " + flightPlan;
-            document.getElementById("introductoryText").textContent = introductoryText;
-            document.getElementById("cruisingAltitude").textContent = cruisingAltitude;
-            document.getElementById("cruisingSpeed").textContent = cruisingSpeed;
+            var response = await getChatbotResponse(userInput); // Call the OpenAI ChatGPT API to get the response
+
+            var flightDetails = generateFlightDetails(response); // Generate flight details based on the chatbot response
+
+            // Update the HTML element with the flight details
+            document.getElementById("flightDetails").innerHTML = flightDetails;
+        }
+
+        // Function to call the OpenAI ChatGPT API and get the response
+        async function getChatbotResponse(userInput) {
+            var response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer org-w8MYDuacOyjAmRG2Z73tQfBm" // Replace with your actual OpenAI API key
+                },
+                body: JSON.stringify({
+                    "model": "gpt-3.5-turbo",
+                    "messages": [
+                        { "role": "system", "content": "You are a helpful assistant." },
+                        { "role": "user", "content": userInput }
+                    ]
+                })
+            });
+
+            var data = await response.json();
+            var chatbotResponse = data.choices[0].message.content;
+
+            return chatbotResponse;
+        }
+
+        // Function to generate the flight details HTML based on the chatbot response
+        function generateFlightDetails(response) {
+            var flightDetails = `
+                Thank you for providing the details for your new flight. Here's the response from the chatbot:<br><br>
+                ${response}
+            `;
+
+            return flightDetails;
         }
 
         // Call the function to populate the flight details when the page loads
