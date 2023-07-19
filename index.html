@@ -1,111 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>New Flight</title>
-  <style>
-    body {
-      background-color: #252934;
-      color: #FFFFFF;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-    
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    
-    form {
-      background-color: #1F222D;
-      border-radius: 6px;
-      padding: 20px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      background-color: #3E4455;
-      color: #FFFFFF;
-    }
-    
-    input[type="submit"] {
-      background-color: #0096FF;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-    
-    #flightPlan {
-      margin-top: 20px;
-      background-color: #3E4455;
-      border-radius: 6px;
-      padding: 20px;
-      white-space: pre-line;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>New Flight Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-  <h1>New Flight</h1>
-  
-  <form>
-    <label for="departure">Departure Airport:</label>
-    <input type="text" id="departure" name="departure" required>
-    <br>
-    
-    <label for="destination">Destination Airport:</label>
-    <input type="text" id="destination" name="destination" required>
-    <br>
-    
-    <label for="airline">Airline:</label>
-    <input type="text" id="airline" name="airline">
-    <br>
-    
-    <label for="aircraft">Aircraft Type:</label>
-    <input type="text" id="aircraft" name="aircraft">
-    <br>
-    
-    <input type="submit" value="Generate Flight Plan">
-  </form>
-  
-  <div id="flightPlan">
-    <!-- Flight plan details will be displayed here -->
-  </div>
-  
-  <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
-      
-      // Retrieve form inputs
-      const departure = document.getElementById('departure').value;
-      const destination = document.getElementById('destination').value;
-      const airline = document.getElementById('airline').value;
-      const aircraft = document.getElementById('aircraft').value;
-      
-      // Generate flight plan
-      const flightPlan = generateFlightPlan(departure, destination, airline, aircraft);
-      
-      // Display flight plan
-      document.getElementById('flightPlan').innerText = flightPlan;
-    });
-    
-    function generateFlightPlan(departure, destination, airline, aircraft) {
-      // Generate flight plan logic goes here
-      
-      // For simplicity, let's assume a static flight plan
-      const flightPlan = `Flight Plan: ${departure} DCT ${destination}`;
-      
-      return flightPlan;
-    }
-  </script>
+    <div class="container">
+        <h1>New Flight Details</h1>
+        <p>Thank you for providing the details for your new flight. Here are the details for your <span id="airline"></span> flight from <span id="departure"></span> to <span id="destination"></span> using an <span id="aircraft"></span>:</p>
+        <p id="flightPlan"></p>
+        <p>Introductory Text: "<span id="introductoryText"></span>"</p>
+        <p>Cruising Altitude: For this flight, a suitable cruising altitude would be <span id="cruisingAltitude"></span>.</p>
+        <p>Cruising Speed: The cruising speed for an <span id="aircraft"></span> is typically <span id="cruisingSpeed"></span>.</p>
+        <p>Please copy and paste the provided flight plan into your flight simulation software. Adjust the cruising altitude and speed as necessary based on your specific simulator requirements.</p>
+        <p>If you have any further requests or need assistance with anything else, feel free to let me know.</p>
+    </div>
+
+    <script>
+        // Function to populate the flight details
+        function populateFlightDetails() {
+            var airline = "Delta Airlines";
+            var departure = "KSFO (San Francisco International Airport)";
+            var destination = "KMIA (Miami International Airport)";
+            var aircraft = "Airbus A330-900neo";
+            var flightPlan = "KSFO DCT CANON DCT LOZIT DCT ZONIE DCT WIGOL DCT KIKIX DCT CUJIM DCT MALIT DCT 2730N 07911W DCT JAAWS DCT ZQA R507 WIGEE R507 BURTT R507 KMIA";
+            var introductoryText = "Welcome aboard our Delta Airlines A330-900neo. We are flying from San Francisco International Airport to Miami International Airport. Enjoy a pleasant flight as we take you to your destination. Over and out.";
+            var cruisingAltitude = "FL350 (35,000 feet)";
+            var cruisingSpeed = "Mach 0.82 (approximately 470 knots or 541 mph)";
+
+            // Update the HTML elements with the flight details
+            document.getElementById("airline").textContent = airline;
+            document.getElementById("departure").textContent = departure;
+            document.getElementById("destination").textContent = destination;
+            document.getElementById("aircraft").textContent = aircraft;
+            document.getElementById("flightPlan").textContent = "Flight Plan: " + flightPlan;
+            document.getElementById("introductoryText").textContent = introductoryText;
+            document.getElementById("cruisingAltitude").textContent = cruisingAltitude;
+            document.getElementById("cruisingSpeed").textContent = cruisingSpeed;
+        }
+
+        // Call the function to populate the flight details when the page loads
+        window.addEventListener("load", populateFlightDetails);
+    </script>
 </body>
 </html>
